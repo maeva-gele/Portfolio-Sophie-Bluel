@@ -10,7 +10,6 @@ async function getWorks() {
 
     const json = await reponse.json()
     console.log(json)
-    setFigure(json)
 
     for (let index = 0; index < json.length; index++) {
         setFigure(json[index])
@@ -26,7 +25,11 @@ const gallery = document.querySelector(".gallery")
 
 function setFigure(data) {
 
-    console.log("Processing item:", data)
+    // console.log("Processing item:", data)
+    // if (!data || !data.imageUrl){
+    //     console.error("This item is missing data! ", data)
+    //     return
+    // }
 
     const figure = document.createElement("figure")
 
