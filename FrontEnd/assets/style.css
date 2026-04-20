@@ -125,6 +125,26 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+.filters{
+	display: flex;
+	justify-content: center;
+	padding-bottom: 50px;
+}
+.filters div{
+	padding: 8px 16px;
+	color: #1D6154;
+	border: solid 1px #1D6154;
+	border-radius: 16px;
+	margin: 0 10px;
+	font-family: 'Syne';
+	font-weight: 700;
+}
+.filters div:hover{
+	color: white;
+	background-color: #1D6154;
+	transition: all .5s ease;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -135,7 +155,6 @@ li:hover {
 
 .gallery img {
 	width: 100%;
-
 }
 #contact {
 	width: 50%;
