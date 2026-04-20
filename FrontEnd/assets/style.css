@@ -129,16 +129,21 @@ li:hover {
 	display: flex;
 	justify-content: center;
 	padding-bottom: 50px;
+	flex-wrap: wrap;
 }
 .filters div{
 	padding: 8px 16px;
 	color: #1D6154;
 	border: solid 1px #1D6154;
-	border-radius: 16px;
-	margin: 0 10px;
+	border-radius: 32px;
+	margin: 10px;
 	font-family: 'Syne';
 	font-weight: 700;
+	cursor:pointer;
+	align-self: center;
+	text-align: center;
 }
+
 .filters div:hover{
 	color: white;
 	background-color: #1D6154;
@@ -205,3 +210,12 @@ footer nav ul {
 	margin: 2em
 }
 
+@media (max-width:570px) {
+	.filters div{
+		width: 100%;
+		margin-bottom: 5px;
+	}
+	.gallery{
+		grid-template-columns: 1fr 1fr;
+	}
+}
