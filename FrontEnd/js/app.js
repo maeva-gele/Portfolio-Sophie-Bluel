@@ -1,6 +1,6 @@
 //RECUPERER LES DONNEES DANS L'API
-
-async function getWorks() {
+/////Récupérer les travaux
+async function getWorks(filter) {
   const url = "http://localhost:5678/api/works" //lien de l'API
   try {
     const reponse = await fetch(url)
@@ -17,9 +17,10 @@ async function getWorks() {
   } catch (erreur) {
     console.error(erreur.message)
   }
-}  
-getWorks() 
+}
+getWorks()
 
+/////Récuper les catégories de filtre 
 async function getCategories() {
   const url = "http://localhost:5678/api/categories" //lien de l'API
   try {
@@ -34,28 +35,35 @@ async function getCategories() {
     for (let index = 0; index < json.length; index++) {
         setFilter(json[index])
     }
+    
+  clickFilter()
   } catch (erreur) {
     console.error(erreur.message)
   }
-}  
+}
 getCategories()
 
-// CREER LES FILTRES 
-const filters = document.querySelector(".filters")
+// AJOUTER LES FILTRES  
+const filtersBox = document.querySelector(".filters-container")
 
 function setFilter(data) {
-
-  const filter = document.createElement("div")
-
-  filter.innerHTML = data.name
-
-  filters.appendChild(filter)
+  const filterCreate = document.createElement("div")
+  filterCreate.textContent = data.name
+  filterCreate.classList.add('filter')
+  filtersBox.appendChild(filterCreate)
 }
 
+function clickFilter(){
+  const filter = document.getElementsByClassName("filter")
+  Array.from(filter).forEach(filter => {
+    filter.addEventListener("click", () => {
+      console.log('test de la clickance');
+    });
+  });
+}
 
-//CREER LES <figure> DANS LE HTML 
+//AJOUTER LES TRAVAUX  
 const gallery = document.querySelector(".gallery")
-
 
 function setFigure(data) {
 

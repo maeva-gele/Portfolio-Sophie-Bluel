@@ -125,13 +125,13 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
-.filters{
+.filters-container{
 	display: flex;
 	justify-content: center;
 	padding-bottom: 50px;
 	flex-wrap: wrap;
 }
-.filters div{
+.filters-container .filter{
 	padding: 8px 16px;
 	color: #1D6154;
 	border: solid 1px #1D6154;
@@ -144,7 +144,7 @@ li:hover {
 	text-align: center;
 }
 
-.filters div:hover{
+.filters-container .filter:hover, .filter:active{ 
 	color: white;
 	background-color: #1D6154;
 	transition: all .5s ease;
@@ -211,7 +211,7 @@ footer nav ul {
 }
 
 @media (max-width:570px) {
-	.filters div{
+	.filters-container .filter{
 		width: 100%;
 		margin-bottom: 5px;
 	}
