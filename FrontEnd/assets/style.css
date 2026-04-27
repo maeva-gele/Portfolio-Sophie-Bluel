@@ -144,8 +144,8 @@ li:hover {
 	text-align: center;
 }
 
-.filters-container .filter:hover, .filter:active{ 
-	color: white;
+.filters-container .filter:hover, .active{ 
+	color: white !important;
 	background-color: #1D6154;
 	transition: all .5s ease;
 }
@@ -211,9 +211,15 @@ footer nav ul {
 }
 
 @media (max-width:570px) {
+	#introduction{
+		flex-direction: column;
+	}
+	#introduction article, header, #portfolio {
+		padding: 10px;
+	}
 	.filters-container .filter{
 		width: 100%;
-		margin-bottom: 5px;
+		margin: 5px 0;
 	}
 	.gallery{
 		grid-template-columns: 1fr 1fr;
