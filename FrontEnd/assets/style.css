@@ -2,6 +2,9 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+*{
+	transition: all ease .5s;
+}
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -52,6 +55,7 @@ body {
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	background-color: #FFFEF8;
 }
 header {
 	display: flex;
@@ -90,12 +94,21 @@ nav ul {
 	list-style-type: none;
 
 }
-nav li {
+nav li{
 	padding: 0 10px;
 	font-size: 1.2em;
 }
+nav li a{
+	font-size: 16px;
+	text-decoration: none;
+	font-family: "Work Sans" ;
+	color: #000;
+}
+nav li a.page{
+	font-weight: 800;
+}
 
-li:hover {
+a:hover {
 	color: #B1663C;
 }
 #introduction {
@@ -202,6 +215,53 @@ input[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+}
+
+/* PAGE LOGIN */
+#login{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+#login form{
+	margin: 40px 0;
+	display: flex;
+	flex-direction: column;
+}
+#login form label{
+	font-family: "Work Sans";
+	font-size: 14px;
+	margin-bottom: 10px;
+	color: #3D3D3D;
+}
+#login form input{
+	height: 50px;
+	width: 380px;
+	border: none;
+	color: #fff;
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.09);
+	margin-bottom: 30px;
+	font-family: "Work Sans";
+	font-size: 16px;
+	color: #3D3D3D;
+}
+#login form input[type="submit"], #login form button{
+	padding: 10px 40px;
+	color: #fff;
+	width: auto;
+	font-family: "Syne";
+	font-size: 14px;
+	line-height: 14px;
+	margin: 0 auto;
+	border: none;
+	border-radius: 60px;
+	background-color: #1D6154;
+	height: 50px;
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.09);
+
+}
+#login form input[type="submit"]:hover, #login form button:hover{
+	background-color: #B1663C;
 }
 
 footer nav ul {
