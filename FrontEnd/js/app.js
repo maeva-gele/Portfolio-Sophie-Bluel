@@ -77,7 +77,7 @@ function createFilterButton(label, categoryId, isActive = false) {
 
   button.textContent = label
   button.classList.add("filter") 
-  button.classList.add(categoryId) 
+  button.classList.add(`category-${categoryId}`) 
 
   if(isActive) {
     button.classList.add("active")
@@ -94,7 +94,7 @@ function createFilterButton(label, categoryId, isActive = false) {
       displayWorks(works)
     } else {
       const filteredWorks = works.filter((work) => {
-        return work.categoryId === categoryId
+        return work.categoryId === Number(categoryId)
       })
 
       displayWorks(filteredWorks)
@@ -106,5 +106,141 @@ function createFilterButton(label, categoryId, isActive = false) {
   return button
 }
 
+
+
+
+let currentModal = null 
+
+///// SOMMES NOUS CONNECTE ?
+function checkAuth() {
+  const token = localStorage.getItem("token")
+  const navLogin = document.getElementById('log')
+  const filtersContainer = document.querySelector(".filters-container")
+
+  if (token) {
+    // L'utilisateur est connecté
+    logout()
+    showAdminFeatures() // Affiche tes boutons "modifier", etc.
+    filtersContainer.style.display = "none"
+  } else {
+    // L'utilisateur n'est pas connecté
+    if (navLogin) navLogin.textContent = "login"
+  }
+}
+
+
+
+
+///// SE CONNECTER 
+const auth = {
+  async login(email, password) {
+    try {
+      const response = await fetch("http://localhost:5678/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        return { success: false, message: data.message };
+      }
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.userId));
+
+      return { success: true, user: data.user };
+    } catch (error) {
+      return { success: false, message: "Erreur serveur" };
+    }
+  }
+}
+
+const form = document.querySelector('form')
+
+///// Quand on submit
+form.addEventListener("submit", async (event) => {
+    // On empêche le comportement par défaut
+    event.preventDefault()
+
+    const email = document.getElementById("email").value
+    const password = document.getElementById("password").value
+
+    const result = await auth.login(email, password)
+
+    if(!result.success) {
+        console.log(result.message)
+    } else {
+    console.log("connecté")
+    open("index.html", "_self")}
+})
+
+///// SE DECONNECTER
+function logout() {
+  const navLogin = document.getElementById('log');
+  navLogin.textContent = "logout";
+
+  navLogin.addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = "index.html"; // Recharge la page pour revenir à l'état "non connecté"
+  });
+}
+
+
+
+
+///// LES PARAMETRES DE MODIFICATIONS
+
+///Afficher le bouton "modifier"
+function showAdminFeatures() {
+  const btnModifier = document.getElementById('btn-modal')
+
+  btnModifier.style.display = null
+  btnModifier.addEventListener("click", openModal)
+}
+
+const modalGallery = document.getElementById('modal-gallery')
+
+function displayModal (worksToDisplay) {
+  modalGallery.innerHTML = "";
+
+  worksToDisplay.forEach((work) => {
+    const modifWork = document.createElement("figure")
+
+    modifWork.innerHTML = `<img src="${work.imageUrl}" alt="${work.title}"><i class="fa-solid fa-trash-can"></i>`
+
+    modalGallery.appendChild(modifWork)
+  })
+}
+
+
+const openModal = function (e) {
+  e.preventDefault()
+  const target = document.querySelector(e.target.getAttribute('href'))
+  target.style.display = null
+  target.setAttribute('aria-hidden', 'false')
+  target.setAttribute('aria-modal', 'true')
+  currentModal = target 
+  displayModal(works)
+  currentModal.addEventListener("click", closeModal)
+}
+
+const closeModal = function (e) {
+  if (currentModal === null) return
+  e.preventDefault()
+  currentModal.style.display = "none"
+  currentModal.setAttribute('aria-hidden', 'true')
+  currentModal.setAttribute('aria-modal', 'false')
+  currentModal.removeEventListener("click", closeModal)
+  currentModal = null 
+}
+
+
 getWorks()
 getCategories()
+document.addEventListener("DOMContentLoaded", checkAuth)

@@ -134,9 +134,20 @@ a:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
-#portfolio h2 {
+
+#portfolio .portfolio-title{
+	display: flex;
+	justify-content: center;
+	gap: 30px;
+}
+#portfolio .portfolio-title h2 {
 	text-align: center;
 	margin-bottom: 1em;
+}
+#portfolio .portfolio-title a {
+	text-align: center;
+	margin-bottom: 1em;
+	cursor: pointer;
 }
 .filters-container{
 	display: flex;
@@ -147,6 +158,7 @@ a:hover {
 .filters-container .filter{
 	padding: 8px 16px;
 	color: #1D6154;
+	background-color: #FFFEF8;
 	border: solid 1px #1D6154;
 	border-radius: 32px;
 	margin: 10px;
@@ -157,8 +169,8 @@ a:hover {
 	text-align: center;
 }
 
-.filters-container .filter:hover, .active{ 
-	color: white !important;
+.filters-container .filter:hover, .filter.active{ 
+	color: #FFFEF8;
 	background-color: #1D6154;
 	transition: all .5s ease;
 }
@@ -173,6 +185,47 @@ a:hover {
 
 .gallery img {
 	width: 100%;
+}
+#modifier-overlay{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, .3);
+}
+#modifier {
+	position: fixed;
+	top: 25%;
+	left: 25vw;
+	width: 50vw;
+	background-color: #FFFEF8;
+	padding: 30px;
+	border-radius: 10px;
+}
+#modifier i.fa-xmark{
+	font-size: 24px;
+	display: flex;
+	justify-content: end;
+}
+#modifier h2{
+	font-family: "Work Sans";
+	font-size: 26px;
+	font-weight: 400;
+	text-align: center;
+	color: #000 ;
+	margin-top: 10px;
+}
+#modifier .content{
+	padding: 50px;
+}
+#modal-gallery{
+	display: flex;
+	flex-wrap: wrap;
+	row-gap: 10px;
+	gap: 30px;
+	padding-bottom: 70px;
+	border-bottom: 1px solid #b3b3b3;
 }
 #contact {
 	width: 50%;
@@ -222,6 +275,7 @@ input[type="submit"]{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	height: 70vh;
 }
 #login form{
 	margin: 40px 0;

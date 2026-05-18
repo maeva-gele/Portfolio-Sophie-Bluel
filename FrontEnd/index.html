@@ -7,9 +7,11 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<script src="js/app.js" defer></script>
+	<script src="js/formulaire.js" defer></script>
 </head>
 
 
@@ -21,7 +23,7 @@
 		<ul>
 			<li><a class="page" href="index.html">projets</a></li>
 			<li><a href="index.html#contact">contact</a></li>
-			<li><a href="login.html">login</a></li>
+			<li><a id="log" href="login.html">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -39,11 +41,25 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
-		<div class="filters-container">
+		<div class="portfolio-title">
+			<h2>Mes Projets</h2>
+			<a href="#modal1" id="btn-modal" aria-hidden="true" aria-modal="false" style="display: none;">
+				<i class="fa-regular fa-pen-to-square"></i>
+				Modifier
+			</a>
 		</div>
+		<div class="filters-container"></div>
 		<div class="gallery"></div>
 	</section>
+	<!-- SECTION MODAL -->
+	<aside id="modal1" style="display: none;" aria-hidden="true">
+		<div id="modifier">
+			<div class="content">
+				<div id="modal-gallery"></div>
+			</div>
+		</div>
+	</aside>
+	<!-- FIN SECTION MODAL -->
 	<section id="contact">
 		<h2>Contact</h2>
 		<p>Vous avez un projet ? Discutons-en !</p>
