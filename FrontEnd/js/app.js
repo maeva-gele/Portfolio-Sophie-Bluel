@@ -215,16 +215,20 @@ function showAdminFeatures() {
   }
 }
 
+///MODAL 1 : modifier la galerie 
+
+//où on l'affiche 
 const modalGallery = document.getElementById('modal-gallery')
 
+//appeler la gallerie 
 function displayModal (worksToDisplay) {
   modalGallery.innerHTML = "";
 
   worksToDisplay.forEach((work) => {
     const modifWork = document.createElement("figure")
 
-    modifWork.innerHTML = `<img src="${work.imageUrl}" alt="${work.title}">
-                          <i class="fa-solid fa-trash-can"></i>`
+    modifWork.innerHTML = `<img src="${work.imageUrl}" alt="${work.title}" class="gallery-img">
+                          <button class="delete-work"><i class="fa-solid fa-trash-can"></i></button>`
 
     modalGallery.appendChild(modifWork)
   })
@@ -239,35 +243,9 @@ const openModal = function (e) {
   target.style.display = null
   target.setAttribute('aria-hidden', 'false')
   target.setAttribute('aria-modal', 'true')
-  const modalGallery = document.getElementById('modal-gallery')
-  function displayWorks(worksToDisplay) {
-    modalGallery.innerHTML = "";
-
-    worksToDisplay.forEach((work) => {
-      const portfolio = document.createElement("figure")
-
-      portfolio.innerHTML = `<img src="${work.imageUrl}" alt="${work.title}">
-                        <figcaption>${work.title}</figcaption>`
-
-    modalGallery.appendChild(figure)
-  })
+  console.log("ouverture de la modale")
+  displayModal(works)
 }
-}
-
-// const closeModal = function (e) {
-//   if (currentModal === null) return
-//   e.preventDefault()
-//   const overlay = document.getElementById('modal1')
-//   overlay.addEventListener('click', ()=> {
-//     target.style.display = "none"
-//     console.log("ovlerlay cliqué")
-//   })
-//   currentModal.style.display = "none"
-//   currentModal.setAttribute('aria-hidden', 'true')
-//   currentModal.setAttribute('aria-modal', 'false')
-//   currentModal.removeEventListener("click", closeModal)
-//   currentModal = null 
-// }
 
 const overlay = document.getElementById('modal1')
 

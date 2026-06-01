@@ -215,12 +215,15 @@ a:hover {
 }
 #modifier {
 	position: fixed;
-	top: 25%;
+	top: 15%;
 	left: 25vw;
 	width: 50vw;
 	background-color: #FFFEF8;
 	padding: 30px;
 	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 #modifier i.fa-xmark{
 	font-size: 24px;
@@ -239,13 +242,56 @@ a:hover {
 	padding: 50px;
 }
 #modal-gallery{
-	display: flex;
-	flex-wrap: wrap;
-	row-gap: 10px;
-	gap: 30px;
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 30px 10px; 
+	padding-top: 45px;
 	padding-bottom: 70px;
 	border-bottom: 1px solid #b3b3b3;
+	height: 30vh;
+	overflow-y: scroll;
+
 }
+#modal-gallery figure {
+	display: block;
+	position: relative;
+}
+#modal-gallery figure img{
+	width: 100%;
+}
+#modal-gallery figure .delete-work{
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	background-color: transparent;
+	padding: 0;
+	border: none;
+}
+#modal-gallery figure i{
+	color: #fff;
+	padding: 4px;
+	background-color: #000;
+	border-radius: 2px;
+}
+#modal-gallery figure i:hover{
+	color: #000;
+	background-color: #fff;
+}
+#add-project{
+	padding: 10px 40px;
+	background-color: #1D6154;
+	color: #fff;
+	font-family: "Syne", sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	border: none;
+	border-radius: 60px;
+	margin: 0 auto;
+}
+#add-project:hover{
+	background-color: #B1663C;
+}
+
 #contact {
 	width: 50%;
 margin: auto;
@@ -345,6 +391,20 @@ footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em
+}
+
+@media (max-width: 1440px) {
+	#modal-gallery{
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@media (max-width: 1024px) {
+	#modal-gallery{
+	display: grid;
+	grid-template-columns: 1fr;
+	}
 }
 
 @media (max-width:570px) {
