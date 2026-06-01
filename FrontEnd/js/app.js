@@ -109,19 +109,21 @@ function createFilterButton(label, categoryId, isActive = false) {
 
 
 
-let currentModal = null 
 
 ///// SOMMES NOUS CONNECTE ?
+
 function checkAuth() {
   const token = localStorage.getItem("token")
   const navLogin = document.getElementById('log')
   const filtersContainer = document.querySelector(".filters-container")
-
+  const banniere = document.getElementById('mode-edition')
   if (token) {
     // L'utilisateur est connecté
     logout()
     showAdminFeatures() // Affiche tes boutons "modifier", etc.
     filtersContainer.style.display = "none"
+    banniere.style.display = null
+
   } else {
     // L'utilisateur n'est pas connecté
     if (navLogin) navLogin.textContent = "login"
@@ -162,46 +164,55 @@ const auth = {
 const form = document.querySelector('form')
 
 ///// Quand on submit
-form.addEventListener("submit", async (event) => {
-    // On empêche le comportement par défaut
-    event.preventDefault()
+if (form) {
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-    const email = document.getElementById("email").value
-    const password = document.getElementById("password").value
-
-    const result = await auth.login(email, password)
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    // console.log(email, password)
+    const result = await auth.login(email, password);
 
     if(!result.success) {
-        console.log(result.message)
+        console.log(result.message);
+        const message = document.getElementById('message')
+        message.innerHTML="<p class='erreur'>Identifiant ou mot de passe erroné</p>"
     } else {
-    console.log("connecté")
-    open("index.html", "_self")}
-})
-
-///// SE DECONNECTER
-function logout() {
-  const navLogin = document.getElementById('log');
-  navLogin.textContent = "logout";
-
-  navLogin.addEventListener("click", (e) => {
-    e.preventDefault();
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    window.location.href = "index.html"; // Recharge la page pour revenir à l'état "non connecté"
+        console.log("connecté");
+        // open('index.html')
+        document.location.href = "index.html"
+    }
   });
 }
 
+///// SE DECONNECTER
+function logout() {
+  const navLogin = document.getElementById('log')
+  if (!navLogin) return
+  navLogin.textContent = "logout"
 
+  navLogin.addEventListener("click", (e) => {
+    e.preventDefault()
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
+    window.location.href = "index.html" // Recharge la page pour revenir à l'état "non connecté"
+  });
+}
 
 
 ///// LES PARAMETRES DE MODIFICATIONS
 
 ///Afficher le bouton "modifier"
-function showAdminFeatures() {
-  const btnModifier = document.getElementById('btn-modal')
 
-  btnModifier.style.display = null
-  btnModifier.addEventListener("click", openModal)
+const btnModifier = document.getElementById('btn-modal')
+
+function showAdminFeatures() {
+  if (btnModifier) {
+    btnModifier.style.display = null
+    btnModifier.setAttribute('aria-hidden', 'false')
+    btnModifier.setAttribute('aria-modal', 'true')
+    btnModifier.addEventListener("click", openModal)
+  }
 }
 
 const modalGallery = document.getElementById('modal-gallery')
@@ -212,33 +223,60 @@ function displayModal (worksToDisplay) {
   worksToDisplay.forEach((work) => {
     const modifWork = document.createElement("figure")
 
-    modifWork.innerHTML = `<img src="${work.imageUrl}" alt="${work.title}"><i class="fa-solid fa-trash-can"></i>`
+    modifWork.innerHTML = `<img src="${work.imageUrl}" alt="${work.title}">
+                          <i class="fa-solid fa-trash-can"></i>`
 
     modalGallery.appendChild(modifWork)
   })
 }
 
+let currentModal = null 
+const target = document.getElementById('modal1')
 
 const openModal = function (e) {
   e.preventDefault()
-  const target = document.querySelector(e.target.getAttribute('href'))
+  if (!target) return 
   target.style.display = null
   target.setAttribute('aria-hidden', 'false')
   target.setAttribute('aria-modal', 'true')
-  currentModal = target 
-  displayModal(works)
-  currentModal.addEventListener("click", closeModal)
+  const modalGallery = document.getElementById('modal-gallery')
+  function displayWorks(worksToDisplay) {
+    modalGallery.innerHTML = "";
+
+    worksToDisplay.forEach((work) => {
+      const portfolio = document.createElement("figure")
+
+      portfolio.innerHTML = `<img src="${work.imageUrl}" alt="${work.title}">
+                        <figcaption>${work.title}</figcaption>`
+
+    modalGallery.appendChild(figure)
+  })
+}
 }
 
-const closeModal = function (e) {
-  if (currentModal === null) return
-  e.preventDefault()
-  currentModal.style.display = "none"
-  currentModal.setAttribute('aria-hidden', 'true')
-  currentModal.setAttribute('aria-modal', 'false')
-  currentModal.removeEventListener("click", closeModal)
-  currentModal = null 
-}
+// const closeModal = function (e) {
+//   if (currentModal === null) return
+//   e.preventDefault()
+//   const overlay = document.getElementById('modal1')
+//   overlay.addEventListener('click', ()=> {
+//     target.style.display = "none"
+//     console.log("ovlerlay cliqué")
+//   })
+//   currentModal.style.display = "none"
+//   currentModal.setAttribute('aria-hidden', 'true')
+//   currentModal.setAttribute('aria-modal', 'false')
+//   currentModal.removeEventListener("click", closeModal)
+//   currentModal = null 
+// }
+
+const overlay = document.getElementById('modal1')
+
+overlay.addEventListener('click', (event)=> {
+  if (event.target === overlay) {
+    target.style.display = "none"
+    console.log("ovlerlay cliqué")}
+  })
+
 
 
 getWorks()
