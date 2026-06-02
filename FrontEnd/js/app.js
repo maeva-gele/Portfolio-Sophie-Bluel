@@ -234,9 +234,13 @@ function displayModal (worksToDisplay) {
   })
 }
 
+//boutons supprimer un projet 
+
+
 let currentModal = null 
 const target = document.getElementById('modal1')
 
+//affichage de la modale
 const openModal = function (e) {
   e.preventDefault()
   if (!target) return 
@@ -247,6 +251,7 @@ const openModal = function (e) {
   displayModal(works)
 }
 
+//Fermer la modale
 const overlay = document.getElementById('modal1')
 
 overlay.addEventListener('click', (event)=> {

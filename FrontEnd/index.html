@@ -59,13 +59,34 @@
 		<div class="gallery"></div>
 	</section>
 	<!-- SECTION MODAL -->
-	<aside id="modal1" aria-hidden="true" style="display: none;">
-		<div id="modifier">
+	<aside id="modal1"  class="modal"aria-hidden="true" style="display: none;">
+		<div class="modifier">
 			<div class="content">
 				<h2>Galerie photo</h2>
 				<div id="modal-gallery"></div>
 			</div>
 			<button id="add-project">Ajouter une photo</button>
+		</div>
+	</aside>
+	<aside id="modal2"  class="modal"aria-hidden="true" >
+		<div class="modifier">
+			<div class="content">
+				<h2>Ajout photo</h2>
+				<form action="">
+					<div class="formulaire">
+						<button>
+							<input type="file" name="image" id="image-new-work">
+							<p>+ Ajouter une photo</p>
+						</button>
+						<p>jpg, png, 4mo max</p>
+					</div>
+					<label for="title">Titre</label>
+					<input type="text" name="title" id="title-new-work">
+					<label for="categorie">Catégorie</label>
+					<select name="categorie" id="categorie-new-work"></select>
+					<input type="submit" value="Valider">
+				</form>
+			</div>
 		</div>
 	</aside>
 	<!-- FIN SECTION MODAL -->
