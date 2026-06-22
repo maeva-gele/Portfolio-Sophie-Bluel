@@ -205,7 +205,7 @@ a:hover {
 .gallery img {
 	width: 100%;
 }
-#modal1{
+#modal1, #modal2{
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -214,10 +214,11 @@ a:hover {
 	background: rgba(0, 0, 0, .3);
 }
 .modifier {
+	height: 80vh;
 	position: fixed;
-	top: 15%;
-	left: 25vw;
-	width: 50vw;
+	top: 10vh;
+	left: 30%;
+	width: 40%;
 	background-color: #FFFEF8;
 	padding: 30px;
 	border-radius: 10px;
@@ -298,17 +299,32 @@ a:hover {
 	flex-direction: column;
 }
 #modal2 form .formulaire{
+	height: 170px;
 	padding: 15px 30%;
 	background-color: #E8F1F6;
+	align-items: center;
 }
 #modal2 form .formulaire button{
-	background-color: #1D6154;
-	color: #fff;
+	background-color: #CBD6DC;
+	color: #1D6154;
 	border: none;
 	border-radius: 50px;
-	margin: 0 auto;
+	margin: 0 auto 10px;
 	position: relative;
+	width: 220px;
+	padding: 10px 30px;
+}
+
+#modal2 form .formulaire button:hover{
+	color: #E8F1F6;
+	background-color: #1D6154;
+}
+#modal2 form .formulaire button input{
 	max-width: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0;
+	opacity: 0;
 }
 
 #modal2 form .formulaire p{
@@ -326,6 +342,14 @@ font-family: "Work Sans", sans-serif;
 	border: none;
 	padding: 0 10px;
 	font-family: "Work Sans", sans-serif;
+}
+
+#modal2 form hr{
+	border-bottom: 1px solid #b3b3b3;
+	margin: 35px 0;
+}
+#modal2 form input[type=submit]{
+	margin: 0 auto;
 }
 
 #image-new-work{

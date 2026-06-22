@@ -238,27 +238,81 @@ function displayModal (worksToDisplay) {
 
 
 let currentModal = null 
-const target = document.getElementById('modal1')
+const target1 = document.getElementById('modal1')
 
 //affichage de la modale
 const openModal = function (e) {
   e.preventDefault()
-  if (!target) return 
-  target.style.display = null
-  target.setAttribute('aria-hidden', 'false')
-  target.setAttribute('aria-modal', 'true')
+  if (!target1) return 
+  target1.style.display = null
+  target1.setAttribute('aria-hidden', 'false')
+  target1.setAttribute('aria-modal', 'true')
   console.log("ouverture de la modale")
   displayModal(works)
 }
 
 //Fermer la modale
-const overlay = document.getElementById('modal1')
 
-overlay.addEventListener('click', (event)=> {
-  if (event.target === overlay) {
-    target.style.display = "none"
+target1.addEventListener('click', (event)=> {
+  if (event.target === target1) {
+    target1.style.display = "none"
     console.log("ovlerlay cliqué")}
   })
+
+
+///// AJOUTER UN PROJET 
+const btnAdd = document.getElementById('add-project')
+const target2 = document.getElementById('modal2')
+
+// affichage de la modale
+
+btnAdd.addEventListener("click", (e)=> {
+  e.preventDefault()
+  if (!target2) return 
+  target2.style.display = null
+  target2.setAttribute('aria-hidden', 'false')
+  target2.setAttribute('aria-modal', 'true')
+  console.log("ouverture de la modale 2")
+  target1.style.display = "none"
+  // addFormulaire()
+  categoriesNewWork(categories) 
+})
+
+// MODAL 2 : ajouter un projet 
+const categoryNewWork = document.getElementById('categorie-new-work')
+
+function categoriesNewWork (categoriesList) {
+  if (!categoryNewWork) return
+  categoryNewWork.innerHTML = ""
+  console.log("categorie test")
+
+  const defautOption = document.createElement("option")
+  defautOption.value = ""
+  defautOption.textContent = "Sélectionner une catégorie"
+  categoryNewWork.appendChild(defautOption)
+  
+  categoriesList.forEach((category) => {
+    const optionCategory = document.createElement("option")
+
+    optionCategory.value = category.id
+    optionCategory.textContent = category.name
+
+    categoryNewWork.appendChild(optionCategory)
+  })
+}
+
+//Fermer la modale
+
+if (target2) {
+  target2.addEventListener('click', (event) => {
+    if (event.target === target2) {
+      target2.style.display = "none"
+      target2.setAttribute('aria-hidden', 'true')
+      target2.removeAttribute('aria-modal')
+      console.log("overlay 2 cliqué")
+    }
+  });
+}
 
 
 
