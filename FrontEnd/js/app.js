@@ -70,7 +70,6 @@ function displayFilters(categories) {
   })
 }
 
-
 /////Création des boutons filtres 
 function createFilterButton(label, categoryId, isActive = false) {
   const button = document.createElement("button")
@@ -108,9 +107,7 @@ function createFilterButton(label, categoryId, isActive = false) {
 
 
 
-
-
-///// SOMMES NOUS CONNECTE ?
+// SOMMES NOUS CONNECTE ?
 
 function checkAuth() {
   const token = localStorage.getItem("token")
@@ -128,8 +125,8 @@ function checkAuth() {
     // L'utilisateur n'est pas connecté
     if (navLogin) navLogin.textContent = "login"
   }
+  token === ""
 }
-
 
 
 
@@ -235,6 +232,11 @@ function displayModal (worksToDisplay) {
 }
 
 //boutons supprimer un projet 
+// const deleteBtn = modifWork.querySelector(".delete-work")
+// deleteBtn.addEventListener("click", async (e) => {
+//   e.preventDefault()
+//   await deleteWork(work.id)
+// })
 
 
 let currentModal = null 

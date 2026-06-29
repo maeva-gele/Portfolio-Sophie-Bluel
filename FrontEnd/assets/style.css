@@ -241,12 +241,13 @@ a:hover {
 }
 .modifier .content{
 	padding: 50px;
+	max-height: 100%;
 }
+
 #modal-gallery{
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
 	gap: 30px 10px; 
-	padding-top: 45px;
 	padding-bottom: 70px;
 	border-bottom: 1px solid #b3b3b3;
 	height: 30vh;
@@ -473,7 +474,7 @@ footer nav ul {
 @media (max-width: 1024px) {
 	#modal-gallery{
 	display: grid;
-	grid-template-columns: 1fr;
+	grid-template-columns: 1fr 1fr;
 	}
 }
 
@@ -490,6 +491,21 @@ footer nav ul {
 	}
 	.gallery{
 		grid-template-columns: 1fr 1fr;
+	}
+	#modal1, #modal2{
+		max-width: 100%;
+	} 
+	.modifier {
+		left: 5%;
+		width: 75%;
+		top: 5%;
+	}
+	.modifier .content {
+		padding: 30px;
+	}
+	#modal-gallery{
+		height: 50vh;
+		grid-template-columns: 1fr;
 	}
 }
 
