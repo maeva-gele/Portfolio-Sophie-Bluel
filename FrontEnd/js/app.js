@@ -259,8 +259,24 @@ target1.addEventListener('click', (event)=> {
   if (event.target === target1) {
     target1.style.display = "none"
     console.log("ovlerlay cliqué")}
+})
+
+const target3 = document.getElementById('btn-close-modale1')
+target3.addEventListener('click', (event)=> {
+  if (event.target === target3) {
+    target1.style.display = "none"
+    console.log("btn fermeture modale cliqué")}
   })
 
+const target4 = document.getElementById('btn-retour-modale')
+target4.addEventListener('click', (event)=> {
+  if (event.target === target4) {
+    target2.style.display = "none"
+    target1.style.display = null
+    target1.setAttribute('aria-hidden', 'false')
+    target1.setAttribute('aria-modal', 'true')
+    console.log("btn fermeture modale cliqué")}
+  })
 
 ///// AJOUTER UN PROJET 
 const btnAdd = document.getElementById('add-project')
@@ -316,7 +332,78 @@ if (target2) {
   });
 }
 
+const target5 = document.getElementById('btn-close-modale2')
+target5.addEventListener('click', (event)=> {
+  if (event.target === target5) {
+    target2.style.display = "none"
+    console.log("btn fermeture modale cliqué")}
+  })
 
+
+// --- APERÇU DE LA PHOTO DANS LA MODALE 2 ---
+const inputImage = document.getElementById("image-new-work")
+const previewImage = document.querySelector(".formulaire img")
+const uploadButton = document.querySelector(".formulaire button")
+const infoText = document.querySelector(".formulaire p")
+const defaultImageSrc = "./assets/images/no-picture-yet.png"
+
+// Restreint nativement le choix aux imgs 
+if (inputImage) {
+  inputImage.setAttribute("accept", "image/png, image/jpeg")
+}
+
+if (inputImage && previewImage) {
+  inputImage.addEventListener("change", (event) => {
+    const file = event.target.files[0]
+
+    if (file) {
+      // Validation du format
+      const validTypes = ["image/jpeg", "image/png"]
+      if (!validTypes.includes(file.type)) {
+        alert("Format invalide ! Veuillez choisir une image au format .jpg ou .png.")
+        resetFormulaireImage()
+        return;
+      }
+
+      // Validation de la taille (4 Mo)
+      if (file.size > 4 * 1024 * 1024) {
+        alert("Le fichier est trop volumineux (4 Mo maximum).")
+        resetFormulaireImage()
+        return;
+      }
+
+      // Lecture et affichage de l'aperçu
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        previewImage.src = e.target.result
+        
+        // On cache le bouton et le texte d'information
+        if (uploadButton) uploadButton.style.display = "none"
+        if (infoText) infoText.style.display = "none"
+        
+        // On change le curseur sur l'image pour indiquer qu'elle est cliquable
+        previewImage.style.cursor = "pointer"
+      };
+      reader.readAsDataURL(file)
+    }
+  });
+
+  // Img clickable
+  previewImage.addEventListener("click", () => {
+    if (previewImage.getAttribute("src") !== defaultImageSrc) {
+      inputImage.click();
+    }
+  });
+}
+
+// Tout réinitialiser en cas d'erreur ou d'annulation
+function resetFormulaireImage() {
+  inputImage.value = ""
+  previewImage.src = defaultImageSrc
+  previewImage.style.cursor = "default"
+  if (uploadButton) uploadButton.style.display = null // Remet le style CSS d'origine
+  if (infoText) infoText.style.display = null
+}
 
 getWorks()
 getCategories()

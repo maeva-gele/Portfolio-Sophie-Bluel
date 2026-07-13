@@ -59,8 +59,11 @@
 		<div class="gallery"></div>
 	</section>
 	<!-- SECTION MODAL -->
-	<aside id="modal1"  class="modal"aria-hidden="true" style="display: none;">
+	<aside id="modal1" class="modal" aria-hidden="true" style="display: none;">
 		<div class="modifier">
+			<div class="btn-modal">
+				<i class="fa-solid fa-xmark" id="btn-close-modale1"></i>
+			</div>
 			<div class="content">
 				<h2>Galerie photo</h2>
 				<div id="modal-gallery"></div>
@@ -68,24 +71,29 @@
 			<button id="add-project">Ajouter une photo</button>
 		</div>
 	</aside>
-	<aside id="modal2"  class="modal"aria-hidden="true" style="display: none;">
+	<aside id="modal2" class="modal" aria-hidden="true" style="display: none;">
 		<div class="modifier">
+			<div class="btns-modal">
+				<i class="fa-solid fa-arrow-left" id="btn-retour-modale"></i>
+				<i class="fa-solid fa-xmark" id="btn-close-modale2"></i>
+			</div>
 			<div class="content">
 				<h2>Ajout photo</h2>
-				<form action="">
+				<form action="add-element">
 					<div class="formulaire">
+						<img src="./assets/images/no-picture-yet.png" alt="no picture yet" id="img-preview">
 						<button>
 							<input type="file" name="image" id="image-new-work">
-							<p>+ Ajouter une photo</p>
+							+ Ajouter une photo
 						</button>
 						<p>jpg, png, 4mo max</p>
 					</div>
-					<label for="title">Titre</label>
+					<label for="title-new-work">Titre</label>
 					<input type="text" name="title" id="title-new-work">
-					<label for="categorie">Catégorie</label>
+					<label for="categorie-new-work">Catégorie</label>
 					<select name="categorie"  id="categorie-new-work"></select>
 					<hr />
-					<input type="submit" value="Valider">
+					<input type="submit" value="Valider" class="no-click-button">
 				</form>
 			</div>
 		</div>

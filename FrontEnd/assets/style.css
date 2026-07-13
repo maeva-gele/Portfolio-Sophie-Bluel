@@ -157,16 +157,20 @@ a:hover {
 #portfolio .portfolio-title{
 	display: flex;
 	justify-content: center;
+	align-items:center;
 	gap: 30px;
+	padding-bottom:30px;
 }
 #portfolio .portfolio-title h2 {
 	text-align: center;
-	margin-bottom: 1em;
 }
 #portfolio .portfolio-title a {
+	color: #000;
 	text-align: center;
-	margin-bottom: 1em;
 	cursor: pointer;
+}
+#portfolio .portfolio-title a:hover{
+	color: #B1663C;
 }
 .filters-container{
 	display: flex;
@@ -226,22 +230,42 @@ a:hover {
 	flex-direction: column;
 	justify-content: center;
 }
-.modifier i.fa-xmark{
+/* .modifier i.fa-xmark{
 	font-size: 24px;
 	display: flex;
 	justify-content: end;
-}
+} */
 .modifier h2{
 	font-family: "Work Sans";
 	font-size: 26px;
 	font-weight: 400;
 	text-align: center;
 	color: #000 ;
-	margin-top: 10px;
+	margin: 10px 0 30px;
+}
+.modifier .btn-modal{
+	display: flex;
+	justify-content: end;
+}
+.modifier .btns-modal{
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 30px;
+}
+.modifier .btns-modal i, .modifier .btn-modal i{
+	font-size: 24px;
+}
+.modifier .btns-modal i:hover, .modifier .btn-modal i:hover{
+	color: #B1663C;
 }
 .modifier .content{
 	padding: 50px;
 	max-height: 100%;
+}
+
+#modal2 .modifier .content{
+	padding-top: 0;
+	overflow-y: scroll;
 }
 
 #modal-gallery{
@@ -301,9 +325,17 @@ a:hover {
 }
 #modal2 form .formulaire{
 	height: 170px;
-	padding: 15px 30%;
+	padding: 15px;
 	background-color: #E8F1F6;
+	display: flex;
+	flex-direction: column;
 	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+}
+#img-preview{
+	object-fit: contain;
+	height: 100%;
 }
 #modal2 form .formulaire button{
 	background-color: #CBD6DC;
@@ -458,6 +490,11 @@ input[type="submit"]:hover{
 	color: red;
 }
 
+.no-click-button, .no-click-button:hover{
+	background-color: #b3b3b3 !important;
+	cursor: default;
+}
+
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
@@ -521,3 +558,4 @@ footer nav ul {
 		padding-top: 20px;
 	}
 }
+
