@@ -32,10 +32,8 @@ async function getCategories() {
     }
 
     categories = await reponse.json()
-    // console.log(categories)
 
     displayFilters(categories)
-  // clickFilter()
   } catch (erreur) {
     console.error(erreur.message)
   }
@@ -57,15 +55,14 @@ function displayWorks(worksToDisplay) {
 
 /////Afficher les catégories 
 function displayFilters(categories) {
+  if (!filtersBox) return
   filtersBox.innerHTML = ""
 
   const allButton = createFilterButton("Tous", "all", true)
-
   filtersBox.appendChild(allButton)
 
   categories.forEach((category) => {
     const button = createFilterButton(category.name, category.id)
-
     filtersBox.appendChild(button)
   })
 }
@@ -92,16 +89,10 @@ function createFilterButton(label, categoryId, isActive = false) {
     if(categoryId === "all"){
       displayWorks(works)
     } else {
-      const filteredWorks = works.filter((work) => {
-        return work.categoryId === Number(categoryId)
-      })
-
+      const filteredWorks = works.filter((work) => work.categoryId === Number(categoryId))
       displayWorks(filteredWorks)
     }
-
-    console.log(categoryId)
   })
-
   return button
 }
 
@@ -118,14 +109,14 @@ function checkAuth() {
     // L'utilisateur est connecté
     logout()
     showAdminFeatures() // Affiche tes boutons "modifier", etc.
-    filtersContainer.style.display = "none"
-    banniere.style.display = null
+    if (filtersContainer) filtersContainer.style.display = "none"
+    if (banniere) banniere.style.display = null
 
   } else {
     // L'utilisateur n'est pas connecté
     if (navLogin) navLogin.textContent = "login"
+    if(banniere) banniere.style.display = "none"
   }
-  token === ""
 }
 
 
@@ -136,9 +127,7 @@ const auth = {
     try {
       const response = await fetch("http://localhost:5678/api/users/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ email, password })
       });
 
@@ -158,25 +147,21 @@ const auth = {
   }
 }
 
-const form = document.querySelector('form')
-
+const loginForm = document.getElementById('loginForm')
 ///// Quand on submit
-if (form) {
-  form.addEventListener("submit", async (event) => {
+if (loginForm) {
+  loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    // console.log(email, password)
-    const result = await auth.login(email, password);
+    const email = document.getElementById("email").value
+    const password = document.getElementById("password").value
+    const result = await auth.login(email, password)
 
     if(!result.success) {
-        console.log(result.message);
         const message = document.getElementById('message')
         message.innerHTML="<p class='erreur'>Identifiant ou mot de passe erroné</p>"
     } else {
         console.log("connecté");
-        // open('index.html')
         document.location.href = "index.html"
     }
   });
@@ -217,26 +202,54 @@ function showAdminFeatures() {
 //où on l'affiche 
 const modalGallery = document.getElementById('modal-gallery')
 
-//appeler la gallerie 
-function displayModal (worksToDisplay) {
+//appeler la gallerie & les boutons supprimer un projet 
+function displayModal(worksToDisplay) {
   modalGallery.innerHTML = "";
 
   worksToDisplay.forEach((work) => {
-    const modifWork = document.createElement("figure")
+    const modifWork = document.createElement("figure");
 
     modifWork.innerHTML = `<img src="${work.imageUrl}" alt="${work.title}" class="gallery-img">
-                          <button class="delete-work"><i class="fa-solid fa-trash-can"></i></button>`
+                          <button class="delete-work"><i class="fa-solid fa-trash-can"></i></button>`;
 
-    modalGallery.appendChild(modifWork)
-  })
+    // On récupère le bouton de suppression qu'on vient de créer
+    const deleteBtn = modifWork.querySelector(".delete-work");
+    deleteBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      await deleteWork(work.id);
+    });
+
+    modalGallery.appendChild(modifWork);
+  });
 }
 
-//boutons supprimer un projet 
-// const deleteBtn = modifWork.querySelector(".delete-work")
-// deleteBtn.addEventListener("click", async (e) => {
-//   e.preventDefault()
-//   await deleteWork(work.id)
-// })
+// Fonction pour envoyer la requête DELETE à l'API
+async function deleteWork(id) {
+  const token = localStorage.getItem("token")
+  if (!token) {
+    alert("Vous devez être connecté pour supprimer un projet.")
+    return;
+  }
+
+  try {
+    const response = await fetch(`http://localhost:5678/api/works/${id}`, {
+      method: "DELETE",
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+
+    if (response.ok) {
+      // On filtre notre tableau local pour retirer le projet supprimé
+      works = works.filter(work => work.id !== id)
+      // On rafraîchit les deux galeries immédiatement
+      displayWorks(works)
+      displayModal(works)
+    } else {
+      alert("Impossible de supprimer ce projet.");
+    }
+  } catch (error) {
+    console.error("Erreur lors de la suppression:", error)
+  }
+}
 
 
 let currentModal = null 
@@ -340,9 +353,9 @@ target5.addEventListener('click', (event)=> {
   })
 
 
-// --- APERÇU DE LA PHOTO DANS LA MODALE 2 ---
+// APERÇU DE LA PHOTO DANS LA MODALE 2
 const inputImage = document.getElementById("image-new-work")
-const previewImage = document.querySelector(".formulaire img")
+const previewImage = document.getElementById("img-preview")
 const uploadButton = document.querySelector(".formulaire button")
 const infoText = document.querySelector(".formulaire p")
 const defaultImageSrc = "./assets/images/no-picture-yet.png"
@@ -403,6 +416,86 @@ function resetFormulaireImage() {
   previewImage.style.cursor = "default"
   if (uploadButton) uploadButton.style.display = null // Remet le style CSS d'origine
   if (infoText) infoText.style.display = null
+}
+
+const submitinput = document.getElementById('submitinput')
+const fileinput = document.getElementById('image-new-work')
+const titleinput = document.getElementById('title-new-work')
+
+function clickableinput() {
+  const imgSrc = previewImage ? previewImage.getAttribute("src") : ""
+  const titleValue = titleinput ? titleinput.value.trim() : ""
+  const categoryValue = categoryNewWork ? categoryNewWork.value : ""
+
+  if (
+    imgSrc !== defaultImageSrc &&
+    imgSrc !== "" &&
+    titleValue !== "" && 
+    categoryValue !== ""
+  ) {
+    submitinput.classList.remove("no-click-button")
+    submitinput.disabled = false
+    console.log("On peut valider le formulaire")
+  } else {
+    // Desactive le btn si on vide un champ
+    submitinput.classList.add("no-click-button")
+    submitinput.disabled = true
+    console.log("formulaire incomplet")
+  }
+}
+
+const addWorkForm = document.getElementById('post-form')
+
+addWorkForm.addEventListener('submit', async (e) => {
+  e.preventDefault()
+
+  if (!fileinput.files[0] || !titleinput.value.trim() || !categoryNewWork.value) {
+    alert("Veuillez remplir tous les champs du formulaire.")
+    return
+  }
+  const formData = new FormData()
+  formData.append("image", fileinput.files[0])
+  formData.append("title", titleinput.value.trim())
+  formData.append("category", Number(categoryNewWork.value))
+
+  const token = localStorage.getItem('token')
+
+  try {
+    const reponse = await fetch('http://localhost:5678/api/works', {
+      method: 'POST', 
+      headers: {'Authorization': `Bearer ${token}`},
+      body: formData
+    })
+
+    if (reponse.ok) { 
+      const newProject = await reponse.json()
+      alert("Projet ajouté avec succès :)")
+      works.push(newProject)
+      displayWorks(works)
+      displayModal(works)
+      addWorkForm.reset()
+      resetFormulaireImage()
+      clickableinput(); // Désactive à nouveau le bouton de validation
+
+    } else if (reponse.status === 401) {
+      alert ('Veuillez vous connecter')
+    } else {
+      alert ('Une erreur est survenue.')
+    }
+  } catch (error) {
+    console.error('Erreur de connection au serveur', error)
+  }
+})
+
+
+if (inputImage) {
+  inputImage.addEventListener("change", clickableinput)
+}
+if (titleinput) {
+  titleinput.addEventListener("input", clickableinput)
+}
+if (categoryNewWork) {
+  categoryNewWork.addEventListener("change", clickableinput)
 }
 
 getWorks()
